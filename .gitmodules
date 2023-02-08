@@ -1,0 +1,6 @@
+[submodule "iskam-unisys"]
+	path = iskam-unisys
+	url = git@github.com:Iskunion/iskam-unisys
+[submodule "iskemu"]
+	path = iskemu
+	url = git@github.com:Iskunion/iskemu
