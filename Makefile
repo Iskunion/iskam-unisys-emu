@@ -1,6 +1,6 @@
 ## specify this
-ISKAM = /home/litrehinn/Documents/Programs/iskam-unisys-emu/iskam-unisys
-ISKEMU = /home/litrehinn/Documents/Programs/iskam-unisys-emu/iskemu
+ISKAM ?= /home/litrehinn/Documents/Programs/iskam-unisys-emu/iskam-unisys
+ISKEMU ?= /home/litrehinn/Documents/Programs/iskam-unisys-emu/iskemu
 ISKEMU_FLAG = -l $(DST_DIR)/iskemu-unisys.log
 ISKEMU_INTERPRETER = $(ISKEMU)/build/iskemu-unisys
 
