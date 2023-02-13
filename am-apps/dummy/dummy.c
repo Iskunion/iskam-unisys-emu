@@ -1,10 +1,11 @@
-#include <klib.h>
+#include <stdio.h>
 #include <am.h>
 #include <klib-macros.h>
 int main(){
   int a=0;
   int b=5;
   int c=a+b;
+  printf("now year is %d\n", io_read(AM_TIMER_RTC).year);
   while (a < 1000000) {
     a++;
     if (a%100000 == 0)
