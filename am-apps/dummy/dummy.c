@@ -1,11 +1,17 @@
 #include <am.h>
 #include <klib-macros.h>
-const char str[] = "Exist with code";
+#include <stdio.h>
+
+// char code[128];
+
 int main(){
-  char str_tmp[50];
-  char *stt = str_tmp;
-  for (char *st = str; *st; st++) *stt++ = *st;
-  *stt++ = '\0';
-  putstr(str_tmp);
+  // char *pc = code, ch;
+
+  // while (ch = io_read(AM_UART_RX).data) *pc++ = ch;
+  // *pc = '\0';
+  // printf("%s\n", code);
+
+  while(1);
+
   return 0;
 }
