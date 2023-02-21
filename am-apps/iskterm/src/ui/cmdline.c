@@ -18,13 +18,29 @@ void cli_init() {
 }
 
 void cli_putc(char ch) {
-  putc_vga(cursor_pos.i, cursor_pos.j, ch, 255, 0, true);
-  cursor_pos.j++;
-  if (cursor_pos.j == terminal_width) cursor_pos.i++;
-  if (cursor_pos.i == terminal_height) {
-    io_write(AM_GPU_CHSCROLL, true);
-    cursor_pos.i--;
+  switch (ch)
+  {
+    case '\n':
+      cursor_pos.i++;
+      if (cursor_pos.i == terminal_height) {
+        io_write(AM_GPU_CHSCROLL, true);
+        cursor_pos.i--;
+      }
+      break;
+    case 33:
+      break;
+    default:
+      putc_vga(cursor_pos.i, cursor_pos.j, ch, 255, 0, true);
+      cursor_pos.j++;
+      if (cursor_pos.j == terminal_width) cursor_pos.i++;
+      if (cursor_pos.i == terminal_height) {
+        io_write(AM_GPU_CHSCROLL, true);
+        cursor_pos.i--;
+      }
+      break;
   }
+  
+  
   return ;
 }
 

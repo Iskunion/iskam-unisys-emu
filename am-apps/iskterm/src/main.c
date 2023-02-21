@@ -10,7 +10,6 @@ int main(){
   display_image();
   cli_init();
   flush_vga();
-  fprint(cli_putc, "Hello iskam %s", __TIME__);
   shell_host();
   return 0;
 }

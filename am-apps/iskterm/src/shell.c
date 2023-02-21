@@ -7,7 +7,8 @@ enum {
 };
 
 static void welcome() {
-
+  fprint(cli_putc, "Hello iskam %s\n", __TIME__);
+  fprint(cli_putc, "Powered by ISKUNION\n");
 }
 static int goodbye() {
   halt(0);
