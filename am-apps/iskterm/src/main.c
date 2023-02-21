@@ -7,7 +7,7 @@
 
 int main(){
   // flush_vga();
-  display_image();
+  // display_image();
   cli_init();
   flush_vga();
   shell_host();

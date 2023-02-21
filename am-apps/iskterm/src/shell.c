@@ -9,8 +9,10 @@ enum {
 static void welcome() {
   fprint(cli_putc, "Hello iskam %s\n", __TIME__);
   fprint(cli_putc, "Powered by ISKUNION\n");
+  prompt();
 }
 static int goodbye() {
+  printf("Terminating...\n");
   halt(0);
   return GENERAL_ERROR;
 }
@@ -21,17 +23,22 @@ void shell_mainloop() {
     switch (e.event_type)
     {
       case ISKEVENT_KEYBOARD: {
-        switch (e.event_val.ascii)
-        {
-          case '\n':
+        add_buffer(e.event_val.ascii);
+        
+        // switch (e.event_val.ascii)
+        // {
+        //   case '\n':
 
-            break;
-          
-          default:
+        //     break;
+        //   default:
             
-            break;
-        }
+        //     break;
+        // }
       }
+        break;
+      case ISKEVENT_RETURN:
+        printf("line: %d breaks at %d\n", cursor_pos.i, cursor_pos.j);
+        push_line();
         break;
       case ISKEVENT_QUIT:
         goodbye();
@@ -39,6 +46,7 @@ void shell_mainloop() {
       default:
         break;
     }
+    sync_vga();
   }
   return ;
 }

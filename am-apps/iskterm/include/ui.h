@@ -13,9 +13,11 @@ void display_image();
 //cmdline
 extern char input_buffer[];
 int add_buffer(char ch);
+void prompt();
 void clr_buffer();
 void cli_init();
 void cli_putc(char ch);
+char* push_line();
 
 extern struct { uint8_t i, j; } cursor_pos;
 

@@ -9,6 +9,7 @@ static bool has_uart, has_kbd;
 
 static void drain_keys() {
   if (has_uart) {
+    printf("in uart mode\n");
     while (1) {
       char ch = io_read(AM_UART_RX).data;
       if (ch == -1) break;
