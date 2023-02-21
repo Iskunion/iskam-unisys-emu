@@ -1,6 +1,5 @@
 #include <am.h>
 #include <klib-macros.h>
-#include <stdio.h>
 
 // char code[128];
 
