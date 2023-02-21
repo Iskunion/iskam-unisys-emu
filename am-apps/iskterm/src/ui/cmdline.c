@@ -22,6 +22,7 @@ void cli_putc(char ch) {
   {
     case '\n':
       cursor_pos.i++;
+      cursor_pos.j = 0;
       if (cursor_pos.i == terminal_height) {
         io_write(AM_GPU_CHSCROLL, true);
         cursor_pos.i--;
