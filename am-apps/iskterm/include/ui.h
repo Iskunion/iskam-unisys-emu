@@ -13,6 +13,7 @@ void display_image();
 //cmdline
 extern char input_buffer[];
 int add_buffer(char ch);
+int del_buffer();
 void prompt();
 void clr_buffer();
 void cli_init();

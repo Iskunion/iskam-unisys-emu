@@ -111,7 +111,6 @@ static struct {
 } kbd_ctl_status;
 
 ISKEvent wait_event() {
-  while (true) {
     AM_INPUT_KEYBRD_T kbd = io_read(AM_INPUT_KEYBRD);
     switch (kbd.keycode)
     {
@@ -144,10 +143,13 @@ ISKEvent wait_event() {
         return (ISKEvent) {.event_type = ISKEVENT_QUIT, .event_val.code = 0};
       case AM_KEY_BACKSPACE:
         if (!kbd.keydown) break;
+        return (ISKEvent) {.event_type  = ISKEVENT_BACKSPACE, .event_val.code = 0};
         break;
       case AM_KEY_RETURN:
         if (!kbd.keydown) break;
         return (ISKEvent) {.event_type = ISKEVENT_RETURN, .event_val.code = 0};
+      case AM_KEY_NONE:
+        return (ISKEvent) {.event_type = ISKEVENT_NIL, .event_val.code = 0};
       default:
         if (!kbd.keydown) break;
         if ((kbd_ctl_status.capslock && kbd_ctl_status.shift) || (!kbd_ctl_status.capslock && !kbd_ctl_status.shift))
@@ -155,5 +157,5 @@ ISKEvent wait_event() {
         else return (ISKEvent) {.event_type = ISKEVENT_KEYBOARD, .event_val.ascii = ascii_upper[kbd.keycode]};
         break;
     }
-  }
+  return (ISKEvent) {.event_type = ISKEVENT_NIL, .event_val.code = 0};
 }

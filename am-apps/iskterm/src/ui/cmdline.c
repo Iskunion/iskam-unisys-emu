@@ -21,12 +21,23 @@ void cli_putc(char ch) {
   switch (ch)
   {
     case '\n':
-      cursor_pos.i++;
+      cursor_pos.i += cursor_pos.j != 0;
       cursor_pos.j = 0;
       if (cursor_pos.i == terminal_height) {
         io_write(AM_GPU_CHSCROLL, true);
         cursor_pos.i--;
       }
+      break;
+    case '\b':
+      if (cursor_pos.j)
+        cursor_pos.j--;
+      else {
+        if (cursor_pos.i) {
+          cursor_pos.j = terminal_width - 1;
+          cursor_pos.i--;
+        }
+      }
+      putc_vga(cursor_pos.i, cursor_pos.j, ' ', 255, 0, true);
       break;
     case 33:
       break;
@@ -43,13 +54,12 @@ void cli_putc(char ch) {
       }
       break;
   }
-  
-  
   return ;
 }
 
 void prompt() {
-  fprint(cli_putc, "isk > ");
+  fprint(cli_putc, "$ ");
+  putc_vga(cursor_pos.i, cursor_pos.j, ' ', 0, 255, true);
 }
 
 int add_buffer(char ch) {
@@ -57,9 +67,19 @@ int add_buffer(char ch) {
   if (ib_cnt < LINE_BUFFER_NR - 1) {
     input_buffer[ib_cnt++] = ch;
     cli_putc(ch);
+    putc_vga(cursor_pos.i, cursor_pos.j, ' ', 0, 255, true);
     return 0;
   }
   return -1;
+}
+
+int del_buffer() {
+  if (ib_cnt) ib_cnt--;
+  else return -1;
+  putc_vga(cursor_pos.i, cursor_pos.j, ' ', 255, 0, true);
+  cli_putc('\b');
+  putc_vga(cursor_pos.i, cursor_pos.j, ' ', 0, 255, true);
+  return 0;
 }
 
 void clr_buffer() {
@@ -68,12 +88,8 @@ void clr_buffer() {
 
 char* push_line() {
   input_buffer[ib_cnt++] = '\0';
-  cursor_pos.i += 1;
-  if (cursor_pos.i == terminal_height) {
-    io_write(AM_GPU_CHSCROLL, true);
-    cursor_pos.i--;
-  }
-  cursor_pos.j = 0;
+  putc_vga(cursor_pos.i, cursor_pos.j, ' ', 255, 0, true);
+  cli_putc('\n');
   // prompt();
   return input_buffer;
 }
