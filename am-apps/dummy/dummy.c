@@ -10,7 +10,7 @@ int main(){
   // *pc = '\0';
   // printf("%s\n", code);
 
-  // while(1);
+  while(1);
 
   return 0;
 }
