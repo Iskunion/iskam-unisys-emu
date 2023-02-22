@@ -4,10 +4,13 @@
 #include <io.h>
 #include <ui.h>
 #include <shell.h>
+#include <app.h>
 
 int main(){
   // flush_vga();
   // display_image();
+  typing_game();
+  video_test();
   cli_init();
   flush_vga();
   shell_host();
