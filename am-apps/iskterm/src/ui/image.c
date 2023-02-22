@@ -12,8 +12,15 @@ void display_image() {
   io_write(AM_GPU_DRAW256, 0, 0, wallpaper, wallpaper_width, wallpaper_height, 0);
   printf("displaying image with size %d*%d at (%d, %d)\n", wallpaper_width, wallpaper_height, x, y);
 
+  sync_vga();
+
   set_alarm(WP_TIMEOUT, 1);
-  while(!check_alarm(1)) sync_vga();
+  while(true) {
+    AM_INPUT_KEYBRD_T key_event = io_read(AM_INPUT_KEYBRD);
+    if(key_event.keycode == AM_KEY_RETURN && key_event.keydown)
+      break;
+    sync_vga();
+  } 
 
   printf("end display image\n");
 }
