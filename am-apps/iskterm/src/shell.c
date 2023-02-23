@@ -48,6 +48,11 @@ static int cmd_expr(char *args) {
   fprint(cli_putc, "Ans: %d\n", res);
   return 0;
 }
+static int cmd_dry(char *args) {
+  uint32_t ans = dry();
+  fprint(cli_putc, "Mark: %d\n", ans);
+  return 0;
+}
 
 static struct {
   const char *name;
@@ -64,6 +69,7 @@ static struct {
   { "clear", "clear", "Clear the screen", cmd_clear },
   { "expr", "expr [expr]", "Calculate the expression", cmd_expr },
   { "hello", "hello [something]", "say hello to somthing you like", cmd_hello },
+  { "dry", "dry", "run drystone benchmark", cmd_dry },
   /* TODO: Add more commands */
 };
 
