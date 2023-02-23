@@ -75,6 +75,10 @@ void video_test() {
   int fps = 0;
 
   while (1) {
+
+    AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
+    if (ev.keydown && ev.keycode == AM_KEY_ESCAPE) return ;
+
     unsigned long upt = io_read(AM_TIMER_UPTIME).us / 1000;
     if (upt - last > 1000 / FPS) {
       update();

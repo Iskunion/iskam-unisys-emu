@@ -8,9 +8,10 @@
 
 int main(){
   // flush_vga();
-  // display_image();
-  typing_game();
-  video_test();
+  display_image();
+  io_write(AM_GPU_CHSCROLL, false);
+  // typing_game();
+  // video_test();
   cli_init();
   flush_vga();
   shell_host();

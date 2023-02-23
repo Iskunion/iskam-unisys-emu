@@ -39,7 +39,7 @@ void cli_putc(char ch) {
       }
       putc_vga(cursor_pos.i, cursor_pos.j, ' ', 255, 0, true);
       break;
-    case 33:
+    case 27:
       break;
     default:
       putc_vga(cursor_pos.i, cursor_pos.j, ch, 255, 0, true);

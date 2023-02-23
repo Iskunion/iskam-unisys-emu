@@ -2,6 +2,7 @@
 #include <io.h>
 #include <ui.h>
 #include <lib.h>
+#include <app.h>
 
 enum {
   GENERAL_ERROR = -1
@@ -13,6 +14,40 @@ static int cmd_help(char *args);
 static int cmd_time(char *args);
 static int cmd_fib(char *args);
 static int cmd_disp(char *args);
+static int cmd_video(char *args) {
+  video_test();
+  io_write(AM_GPU_CHSCROLL, false);
+  return 0;
+}
+static int cmd_typing(char *args) {
+  typing_game();
+  io_write(AM_GPU_CHSCROLL, false);
+  return 0;
+}
+static int cmd_clear(char *args) {
+  clear_vga();
+  cursor_pos.i = 0;
+  cursor_pos.j = 0;
+  return 0;
+}
+static int cmd_hello(char *args) {
+  if (args == NULL) {
+    fprint(cli_putc, "Hello World!\n");
+    return 0;
+  }
+  fprint(cli_putc, "Hello, %s\n", tokenize(NULL, ' '));
+  return 0;
+}
+static int cmd_expr(char *args) {
+  if (args == NULL) {
+    fprint(cli_putc, "Missing operand\n");
+    return GENERAL_ERROR;
+  }
+  bool succ = true;
+  int res = getexpr(args, &succ);
+  fprint(cli_putc, "Ans: %d\n", res);
+  return 0;
+}
 
 static struct {
   const char *name;
@@ -24,6 +59,11 @@ static struct {
   { "time", "time", "Show system time", cmd_time },
   { "fib", "fib [N]", "Calculate fib_n", cmd_fib },
   { "display", "display", "Display boot picture", cmd_disp },
+  { "video", "video", "View a video", cmd_video },
+  { "typing", "typing", "Start typing game", cmd_typing },
+  { "clear", "clear", "Clear the screen", cmd_clear },
+  { "expr", "expr [expr]", "Calculate the expression", cmd_expr },
+  { "hello", "hello [something]", "say hello to somthing you like", cmd_hello },
   /* TODO: Add more commands */
 };
 
@@ -37,9 +77,10 @@ static int cmd_help(char *args) {
     /* no argument given */
     for (i = 0; i < NR_CMD; i ++) {
       fprint(cli_putc, "%s", cmd_table[i].name);
-      fprint(cli_putc, "%c", (i + 1) % 3u ? ' ' : '\n');
+      fprint(cli_putc, "%c", (i + 1) % 4u ? ' ' : '\n');
     }
-    if (i % 3u) fprint(cli_putc, "%c", '\n');
+    if (i % 4u) fprint(cli_putc, "%c", '\n');
+    fprint(cli_putc, "Use help [subcmd] for more\n");
   }
   else {
     for (i = 0; i < NR_CMD; i ++) {
