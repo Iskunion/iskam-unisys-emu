@@ -185,16 +185,6 @@ void shell_mainloop() {
     {
       case ISKEVENT_KEYBOARD: {
         add_buffer(e.event_val.ascii);
-        
-        // switch (e.event_val.ascii)
-        // {
-        //   case '\n':
-
-        //     break;
-        //   default:
-            
-        //     break;
-        // }
       }
         break;
       case ISKEVENT_BACKSPACE:
